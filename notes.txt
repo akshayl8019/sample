@@ -1,0 +1,40 @@
+kubernetes notes
+revision
+
+
+ansible notes revision
+
+terraform docker dockercompose 
+aws cloud see fargate
+
+{deployment with emptydir; daemonset with host; statefulset with pvc}
+jenkins
+
++++++++++++++++++++++++++++++++
+docker docker-compose 2.5
+kubernetes 3
+terraform 3.5
+ansible 1
+jenkins 3.5
+aws 2.5
++++++++++++++++++++++++++++++++
+
+dockercompose
+
+kubernetes
+
+interview prep
+project arch
+
+create a new azure account
+create a new aws account
+
+------------------------------------------------------------
+
+readiness is container ready to serve the traffic
+liveness is container healthy or not
+
+readiness = traffic routing, liveness = restart decision
+
+
+
