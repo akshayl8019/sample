@@ -1,0 +1,42 @@
+Top 10 Helm Interview Questions for 4+ Years Experienced DevOps Engineers
+
+If you're preparing for a DevOps / AWS DevOps Engineer interview, Helm is an important Kubernetes topic. Interviewers often focus on real-time scenarios, troubleshooting, CI/CD, and production deployments.
+
+🔥 Top 10 Helm Questions:
+
+1️⃣ What is Helm and why do we use it with Kubernetes?
+
+2️⃣ What is the difference between Helm 2 and Helm 3? Why was Tiller removed?
+
+3️⃣ Explain the Helm Chart structure — "Chart.yaml", "values.yaml", "templates/", and "_helpers.tpl".
+
+4️⃣ How do you manage Dev, QA, and Production environments using Helm?
+
+5️⃣ What is Helm templating? Explain "if/else", "range", "with", "include", and Helm functions.
+
+6️⃣ What is the difference between:
+👉 "helm install"
+👉 "helm upgrade"
+👉 "helm rollback"
+👉 "helm uninstall"
+
+7️⃣ How do you troubleshoot a failed Helm deployment or Pods in "CrashLoopBackOff"?
+
+8️⃣ What is Helm dependency management? How do "Chart.yaml" and "Chart.lock" work?
+
+9️⃣ How do you integrate Helm with Jenkins/GitHub Actions for CI/CD?
+
+🔟 How do you securely manage Secrets when deploying applications using Helm?
+
+💡 Most Important Real-Time Scenario:
+
+Your application was working before a Helm deployment, but after "helm upgrade", Pods went into "CrashLoopBackOff".
+
+👉 How would you troubleshoot it?
+
+A good approach:
+
+Helm History → Compare Revisions → Check Values → Render Templates → Check ConfigMap/Secrets → "kubectl describe" → Check Logs → Fix Configuration → Rollback if required → Redeploy & Validate
+
+📌 Interview Tip:
+For 4+ years of experience, don't just explain Helm commands. Be ready to explain how you used Helm in production, handled failed releases, managed multiple environments, and integrated Helm with CI/CD pipelines.
