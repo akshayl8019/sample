@@ -19,9 +19,10 @@ jenkins 3.5
 aws 2.5
 +++++++++++++++++++++++++++++++
 
-dockercompose
-
-kubernetes
+dockercompose {done}
+kubernetes {deploymet; statefulset; daemonset; }
+jenkins
+terraform
 
 interview prep
 project arch
@@ -35,6 +36,40 @@ readiness is container ready to serve the traffic
 liveness is container healthy or not
 
 readiness = traffic routing, liveness = restart decision
+
+taint  is applied to the node 
+tolarance is applied to the pod
+
+==================================================================
+
+cicd stages
+
+git commit > webhook triggers > jenkins pipeline
+
+stage1: cloningrepo
+stage2: build(maven,npm)
+stage3: sonarqubescan
+stage4: dockerbuild
+stage5: trivyscan
+stage6: dockerpush to onlinerepo
+stage7: deploy to kubernetes helm 
+stage8: monitoring
+stage9: alert
+
+==================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
