@@ -1,14 +1,4 @@
-kubernetes notes
-revision
 
-
-ansible notes revision
-
-terraform docker dockercompose 
-aws cloud see fargate
-
-{deployment with emptydir; daemonset with host; statefulset with pvc}
-jenkins
 
 +++++++++++++++++++++++++++++++
 docker docker-compose 3
@@ -18,6 +8,8 @@ ansible 1
 jenkins 3.5
 aws 2.5
 +++++++++++++++++++++++++++++++
+aws cloud see fargate
+
 readiness is container ready to serve the traffic
 liveness is container healthy or not
 
@@ -68,10 +60,6 @@ for kubernetes
 
 cloud aws(ec2 and s3)
 
-
-
-
-
 =====================================
 deployment with emptydir, hostpath
 daemonset with pvc
@@ -83,26 +71,17 @@ liveness is container alive or
 kubernetes architecture
 
 sast vs dast SAST = inside-out, code, early. DAST = outside-in, running app, later.
+ex: sonarqube                                   ex: zap
 aws cloud {ec2}
 =====================================
+docker compose 
+jenkins
+kubernetes
 
-
-
-=====================================
-
----
-apiVersion: v1
-kind: Namespace
-metadata:
-   name: samplens
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-   name: sampleds
-   namespace: samplens
-spec:
-   
+terraform 
+aws cloud ec2
+ansible
+git
 
 
 
@@ -122,6 +101,39 @@ spec:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+"Version":"2012-10-17",
+"Statement":[
+{
+"Effect": "Allow",
+"Action": "s3:Getobject,s3:Putobject,s3:Deleteobject",
+"Principal":"*",
+"Resource":"arn:aws:s3:::your-bucket"
+}
+]
+}
 
 
 
@@ -468,3 +480,40 @@ spec:
     - port: 80
       targetPort: 8080
       nodePort: 32767
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: install and configure nginx
+  hosts: all
+  become: true
+
+  vars:
+   service_name: nginx
+
+  tasks:
+     - name: update the apt repo
+        apt:
+         update_cache: true
+
+     - name: install nginx
+        apt:
+         name: "{{ service_name }}"
+         state: present
+         
+     - name: start and enable nginx
+        service:
+          name: "{{ service_name }}"
+          state: started
+          enabled: yes
+          
+
