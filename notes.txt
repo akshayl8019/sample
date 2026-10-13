@@ -86,9 +86,13 @@ git
 
 
 
-
-
-
+  
+steps1: check docker containers are running or not. docker compose ps 
+steps2: check mysql container logs for any authentication or database failures
+steps3: check mysql and backend and frontend are in same network
+steps4: check backend logs 
+steps5: verify database conectivity issues
+steps6: check database readiness
 
 
 
