@@ -84,15 +84,174 @@ ansible
 git
 
 
-
-
-  
 steps1: check docker containers are running or not. docker compose ps 
 steps2: check mysql container logs for any authentication or database failures
 steps3: check mysql and backend and frontend are in same network
 steps4: check backend logs 
 steps5: verify database conectivity issues
 steps6: check database readiness
+==========================================================================
+
+
+
+scenario on docker kubernetes 
+revision docker
+
+
+
+
+
+
+
+terraform {
+required_version= ">= 1.5"
+required_providers{
+aws={
+source= "hashicorp/aws"
+version= "~> 5.0"
+}
+}
+}
+
+provider "aws" {
+region='ap-south-1'
+
+}
+
+resource "aws_s3_bucket" "mybucket" {
+bucket= var.bucket
+tags={
+env="test"
+}
+}
+
+
+
+
+
+
+
+FROM openjdk:11-slim
+COPY . ./app
+WORKDIR /app
+RUN mvn clean install
+CMD ["java","-jar","app.jar"]
+EXPOSE 8080
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+terraform{
+required_version= "1.10.0"
+required_providers{
+aws={
+source= "hashicrop/aws"
+version= "~> 5.0"
+}
+}
+
+provider "aws" {
+region= "ap-south-2"
+}
+
+resource "aws_s3_bucket" "mybucket" {
+bucket=""
+tags=
+{
+env="test"
+}
+}
+
+
+
+
+
+
+
+------revision-------
+
+docker 
+kubernetes
+terraform
+jenkins
+aws cloud 
+
+
+senerio based questions 
+
+project structure
+--------------------
+
+write deployment with emptydir nodeport as a service
+statefulset with volumeclaimtemplate 
+daemonset with pvc and loadbalancer as a service
+
+
+
+
+
+
+kubectl sends the request to the API server.
+The API server validates it and stores it in etcd.
+The scheduler sees an unassigned pod and assigns it to a node.
+The kubelet on that node sees the assignment and tells containerd to pull the image and start the container.
+kube-proxy sets up the networking rules so the pod is reachable.
+The controller manager keeps checking that the actual state matches what you asked for.
+
+
+terraform {
+required_version= ">= 1.1"
+
+required_providers{
+aws={
+source="hashicrop/aws"
+version="~> 5.0"
+}
+}
+}
+
+
+provider "aws" {
+region="ap-south-1"
+profile="user"
+}
+
+resource "aws_s3_bucket" "mybucket" {
+bucket="sampleyesty"
+tags={
+env="test"
+}
+}
+
+
+--------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -138,34 +297,6 @@ steps6: check database readiness
 }
 ]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
