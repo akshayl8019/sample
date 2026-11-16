@@ -138,18 +138,7 @@ RUN mvn clean install
 CMD ["java","-jar","app.jar"]
 EXPOSE 8080
 
-
-
-
-
-
-
-
-
-
-
-
-
+==========================================================================
 
 terraform{
 required_version= "1.10.0"
@@ -172,11 +161,7 @@ env="test"
 }
 }
 
-
-
-
-
-
+==========================================================================
 
 ------revision-------
 
@@ -249,16 +234,16 @@ statefulset with volumeclaimTemplates
 
 
 Revision
-intro
-git github branching feature based branching strategy
+intro  {done}
+git github branching feature based branching strategy {}
 docker {python java node application in docker}
 docker compose 
 kubernetes 
  deployments statefulset daemonset 
  helm 
 terraform 
-jenkins
-aws
+jenkins 
+aws 
 
 
 
@@ -296,6 +281,112 @@ helm history myapp -n samplens                                # list revisions
 helm rollback myapp 2 -n samplens                             # roll back to revision 2
 helm rollback myapp -n samplens                               # roll back to previous revision
 helm uninstall myapp -n samplens                              # remove the release
+==========================================================================
+
+
+terraform {
+required_version= ">= 1.1"
+
+required_provider{
+aws={
+source= "hashicrop/aws"
+version= ">= 5.1"
+}
+}
+}
+
+
+provider "aws" {
+region= var.region
+profile="myuser"
+}
+
+variable.tf
+variable "region" {
+description=""
+type="string"
+default="ap-south-1"
+}
+
+variable "profile" {
+description=""
+type="string"
+}
+
+terraform.tfvars
+profile="myuser"
+
+
+resource "aws_instance" "myweb" {
+ami=""
+instance_type=""
+tags={
+env="test"
+}
+}
+
+
+resource "aws_security_group" "mysg" {
+name=""
+vpc_id=""
+ingress{
+to_port=22
+from_port=22
+cidr_block=["23.23.23/32"]
+portocol="tcp"
+}
+egress{
+to_port=0
+from_port=0
+portocol="-1"
+cidr_block=[0.0.0.0/0]
+}
+}
+
+
+resource "aws_s3_bucket" "mybucket" {
+bucket="mys3bucket"
+tags={
+env="test"
+}
+}
+
+
+
+outputs.tf
+output "instance_publicip" {
+description="instance public ip"
+value=aws_instance.myweb.public_ip
+}
+
+
+==========================================================================
+
+
+FROM python:3.12-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python3","app.py"]
+EXPOSE 3000
+
+FROM openjdk:11-slim
+WORKDIR /app
+COPY . .
+RUN apt-get install maven -y && mvn clean install 
+CMD ["java","-jar","target/app.war"]
+EXPOSE 8080
+
+FROM node:22-slim
+WORKDIR /app
+COPY . .
+RUN npm install
+CMD ["npm","run","dev"]
+EXPOSE 3000
+
+
+
+==========================================================================
 
 
 
@@ -310,6 +401,98 @@ helm uninstall myapp -n samplens                              # remove the relea
 
 
 
+0 process finished normally
+1 application error
+2 shell command errors 
+125 daemon failed to run the container
+126 permission errors
+127 command not found
+137 oomkilled memory error
+143 killed forcefully
+
+docker client sends the requests to docker daemon checks the image locally 
+
+is container running or not 
+docker logs 
+docker inspect for containerexit code 
+docker exec  <container_nameorid> /bin/bash
+i would check port mapping
+check resources docker stats 
+sudo jounalctl - u docker -n 100
+
+
+
+alipne vs slim
+small image compared to slim
+for secuirty purpose it is best 
+runtime and storage is less compared to slim
+apk package manager 
+hard to debug 
+lib or dependencies 
+
+slim 
+bigger than alpine
+runtime and storage takes time than the alpine 
+apt package manager
+easier to debug
+security purpose 
+
+
+
+services:
+    app: 
+     container_name: samplenginx
+     image: nginx:latest
+     ports:
+      - "80:80"
+     volumes:
+      - samplevol:/usr/share/nginx/html
+     networks:
+      - samplenet
+     depends_on:
+       db
+   db:
+     container_name: samplemysql
+     image: mysql:latest
+     ports:
+       - "3306:3306"
+     env_files:
+       - .env
+     environment:
+       - db_port: 3306
+         db_host: db
+     volumes:
+       - samplevoldb:/var/lib/mysql
+     networks:
+       - samplenet
+
+networks:
+  samplenet:
+
+volumes:
+  samplevol:
+  samplevoldb:
+   
+
+
+
+turbloshooting in kubernetes cluster 
+first i would check the cluster health
+i would check the node and work load on it
+i deploy application using helm 
+toubleshoot pod and node issues
+managing resource utilization
+configure autoscaling 
+monitoring applications through promethus and grafana
+
+
+aws cloud 
+
+docker kubernetes jenkins terraform aws cloud ansible 
+
+
+
+apt
 
 
 
@@ -323,25 +506,7 @@ helm uninstall myapp -n samplens                              # remove the relea
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+==========================================================================
 
 {
 "Version":"2012-10-17",
