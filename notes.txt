@@ -240,6 +240,63 @@ env="test"
 
 
 
+deployment with emptydir
+daemonset with hostpath
+statefulset with volumeclaimTemplates
+
+
+
+
+
+Revision
+intro
+git github branching feature based branching strategy
+docker {python java node application in docker}
+docker compose 
+kubernetes 
+ deployments statefulset daemonset 
+ helm 
+terraform 
+jenkins
+aws
+
+
+
+scenario based questions
+docker 
+kubernetes
+aws cloud
+
+problems
+
+
+git branching strategy 
+
+
+intro 
+
+git reset is used for deleting files by mistake sent to git histroy
+git rebase it rewrites the commit
+
+{
+abc main
+ feature de 
+abcde 
+}
+
+
+
+
+Helm release lifecycle
+
+helm install myapp ./mychart -n samplens --create-namespace   # first deploy
+helm upgrade myapp ./mychart -n samplens                      # roll out a new version
+helm upgrade --install myapp ./mychart -n samplens            # install or upgrade (common in CI)
+helm history myapp -n samplens                                # list revisions
+helm rollback myapp 2 -n samplens                             # roll back to revision 2
+helm rollback myapp -n samplens                               # roll back to previous revision
+helm uninstall myapp -n samplens                              # remove the release
+
 
 
 
