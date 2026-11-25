@@ -272,6 +272,31 @@ abcde
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Helm release lifecycle
 
 helm install myapp ./mychart -n samplens --create-namespace   # first deploy
@@ -492,13 +517,292 @@ docker kubernetes jenkins terraform aws cloud ansible
 
 
 
-apt
+1️⃣ Validate the code**
+A developer opens a pull request. The pipeline runs build checks, unit tests, code-quality analysis, and dependency scans. Branch policies require successful validation and review before merging.
+
+2️⃣ Build and push the image**
+After merging, the pipeline builds a Docker image, scans it for vulnerabilities, and pushes it to ACR with a unique tag linked to the commit.
+
+3️⃣ Deploy to Dev**
+The pipeline deploys the image using a Helm chart:
+`helm upgrade --install myapp ./chart -n dev -f values-dev.yaml`
+
+4️⃣ Validate in Stage**
+5️⃣ Release to Prod**
+
+
+docker ps
+docker logs <containerid>
+docker inspect <id>
+0 1 2 125 126 127 137 143
+docker status
+docker exec -it <cid> /bin/bash
+docker port 
+
+
+aws health dashboard 
+
+
+
+trivy image -f json -o results.json nginx:latest
+
+
+
+gitlab
+
+stages:
+ - stage1
+ - stage2
+
+variables:
+
+
+job_name_1:
+  stage: 
+  script:
+   - 
+  tags:
+   - 
+
+
+.gitlab-ci.yml
+
+
+
+FROM python:3.2-slim
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python","app.py"]
+EXPOSE 3000
+
+
+    
+
+
+
+
+
+FROM openjdk:22-slim
+WORKDIR /app
+COPY . .
+RUN mvn clean install 
+CMD ["java","-jar","app.jar"]
+EXPOSE 8080
+
+
+
+multi stage advantages
+small image size
+less build time
+good secuity risk is minimal
+can stop a stage
+
+advantages of slim 
+smaller size 
+fewer vurnarabilities 
+
+
+advantages of alpine
+smallest size
+
+
+cicd jenkins 
+sast vs dast {zap}
+docker
+kubernetes 
+terraform
+git
+     
+aws cloud
+
+
+           
+
+
+
+
+kubectl rollout undo deployment -n namespace
+
+helm rollback name -n namespace
+
+git reset deletes the commit history 
+
+git rebase abcef
+
+abcef
+
+
+
+aws cloud 
+terraform 
+
+alb and nlb 
+works on application layer works on transport layer
+http and https protocol   tcp and udp portocol
+path based and host based roting low latency
+flipkart                  primevideo banking a
+
+
+terraform.tfvars
+variable.tf
+main.tf
+output.tf
+provider.tf
+backend.tf
+
+
+
+
+
+terraform init
+downloads provider modules dependencies and creates terraform.lock.hcl file
+
+terraform fmt
+terraform validate
+terraform plan 
+terraform 
 
 
 
 
 
 
+
+
+
+
+kubectl get pods 
+describe pod name
+logs podname --previous 
+get events
+
+
+
+scripting and 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How do you handle issues caused by previous production incidents?
+I start by reviewing the incident timeline, monitoring data, application logs, deployment history, and recent configuration changes. I identify the root cause instead of applying only a temporary fix.
+
+I restore service quickly using a rollback, configuration correction, or traffic shift when necessary. After recovery, I document the incident, identify the contributing factors, and create corrective actions.
+
+I also improve the system to prevent recurrence. That includes adding monitoring and alerts, improving health checks, updating deployment pipelines, strengthening access controls, and automating recovery steps. I track each action through completion and verify the fix in a lower environment before applying it to production.
+
+
+
+
+
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: samplens
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: sampledeploy
+   namespace: samplens
+spec:
+   replicas: 4
+   strategy:
+      type: RollingUpdate
+      rollingUpdate:
+       maxUnavailable: 2
+       maxSurge: 1
+   selector:
+      matchLabels:
+         app: sampleapp
+   template:
+      metadata:
+        labels:
+           app: sampleapp
+      spec:
+        containers:
+          - name: samplecontainer
+            image: sample:v1
+            ports:
+              - containerPort: 8080
+            resources:
+               requests:
+                  cpu: "100m"
+                  memory: "128Mi"
+               limits:
+                  cpu: "500m"
+                  memory: "512Mi"
+            volumesMounts:
+              - name: samplevol
+                mountPath: /data
+        volumes:
+          - name: samplevol
+            emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: samplesvc
+   namespace: samplens
+spec:
+   type: NodePort
+   selector:
+     app: sampleapp
+   ports:
+     - port: 80
+       targetPort: 8080
+       nodePort: 32767
+
+
+
+
+
+resource "aws_s3_bucket" "mybucket" {
+bucket="bucketname"
+tags={
+env="test"
+}
+}
+
+
+resource "aws_s3_bucket_"
 
 
 
@@ -845,6 +1149,10 @@ spec:
 
 
 
+2018 2019 2020 2021 
+2022 2023 2024 2025
+2026
+
 
 
 
@@ -872,5 +1180,30 @@ spec:
           name: "{{ service_name }}"
           state: started
           enabled: yes
-          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
